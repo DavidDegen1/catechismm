@@ -3,13 +3,14 @@ import Link from "next/link";
 import { ChevronLeft, Clock, MessageCircle, Share2 } from "lucide-react";
 import InteractiveParableClient from "./InteractiveParableClient";
 
-export default async function ParableDetailPage({ params }: { params: { id: string } }) {
+export default async function ParableDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
+  const resolvedParams = await params;
 
   const { data: parable, error } = await supabase
     .from("parables")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", resolvedParams.id)
     .single();
 
   if (error || !parable) {
