@@ -1,16 +1,17 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { Play, Pause, CheckCircle, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import InteractiveLessonClient from "./InteractiveLessonClient";
 
-export default async function LessonDetailPage({ params }: { params: { id: string } }) {
+export default async function LessonDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
+  const resolvedParams = await params;
 
   // Fetch dữ liệu bài học từ Supabase khớp ID
   const { data: lesson, error } = await supabase
     .from("lessons")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", resolvedParams.id)
     .single();
 
   if (error || !lesson) {
@@ -25,8 +26,14 @@ export default async function LessonDetailPage({ params }: { params: { id: strin
     );
   }
 
-  // Fallback tạm thời nếu content trong DB rỗng
-  const content = lesson.content || `
+  // Fetch từ vựng liên quan
+  const { data: glossaries } = await supabase
+    .from("glossaries")
+    .select("*")
+    .eq("related_lesson_id", resolvedParams.id);
+
+  // Fallback tạm thời nếu read_content trong DB rỗng
+  const readContent = lesson.read_content || `
     Thiên Chúa sáng tạo trời đất. Đất còn trống rỗng, chưa có hình thể, bóng tối bao trùm vực thẳm, và thần khí Thiên Chúa bay lượn trên mặt nước.
     Thiên Chúa phán: "Phải có ánh sáng." Liền có ánh sáng. Thiên Chúa thấy ánh sáng tốt đẹp. Thiên Chúa phân rẽ ánh sáng và bóng tối...
     
@@ -57,8 +64,13 @@ export default async function LessonDetailPage({ params }: { params: { id: strin
           </p>
         </header>
 
-        {/* Tách phần tương tác tĩnh/động do Server component không cho dùng hooks useState */}
-        <InteractiveLessonClient content={content} />
+        <InteractiveLessonClient 
+          lesson={{
+            ...lesson,
+            read_content: readContent
+          }} 
+          glossaries={glossaries || []} 
+        />
       </div>
     </div>
   );

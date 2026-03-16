@@ -2,21 +2,22 @@ import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import InteractiveQuizClient from "./InteractiveQuizClient";
 
-export default async function QuizDetailPage({ params }: { params: { id: string } }) {
+export default async function QuizDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
+  const resolvedParams = await params;
 
   // 1. Lấy thông tin bài học (đóng vai trò là thông tin bộ Quiz)
   const { data: lesson, error: lessonError } = await supabase
     .from("lessons")
     .select("id, title")
-    .eq("id", params.id)
+    .eq("id", resolvedParams.id)
     .single();
 
   // 2. Lấy danh sách câu hỏi trắc nghiệm thuộc bài học này
   const { data: questions, error: questionsError } = await supabase
     .from("quizzes")
     .select("*")
-    .eq("lesson_id", params.id);
+    .eq("lesson_id", resolvedParams.id);
 
   if (lessonError || questionsError || !lesson || !questions || questions.length === 0) {
     return (

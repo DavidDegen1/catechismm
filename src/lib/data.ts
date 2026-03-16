@@ -16,46 +16,81 @@ export type Lesson = {
   id: string;
   title: string;
   description: string;
+  readContent?: string;
+  reflectQuestion?: string;
+  prayContent?: string;
+  actContent?: string;
   category: "Cựu Ước" | "Tân Ước" | "Phụng Vụ" | "Luân Lý";
   duration: number; // in minutes
   imageUrl?: string;
   audioUrl?: string;
+  ambientSoundUrl?: string;
   isUnlocked: boolean;
+};
+
+export type Glossary = {
+  id: string;
+  term: string;
+  definition: string;
+  relatedLessonId: string | null;
 };
 
 export const MOCK_LESSONS: Lesson[] = [
   {
     id: "l1_sangthe_1",
     title: "Chương 1: Công Trình Sáng Tạo",
-    description: "Khám phá khởi đầu của vạn vật và tình yêu của Thiên Chúa khi tạo dựng vũ trụ qua 7 ngày.",
+    description: "Khám phá khởi đầu của vạn vật và tình yêu của Thiên Chúa qua 7 ngày.",
+    readContent: "Lúc khởi đầu, trời đất trống không và tăm tối. Thiên Chúa phán: \"Hãy có ánh sáng.\" Và liền có ánh sáng. Đó là khởi đầu của vạn vật. Thiên Chúa tạo dựng muôn loài muôn vật trong 6 ngày, và chọn ngày thứ 7 để nghỉ ngơi. Sự sáng tạo vạn hữu là minh chứng đầu tiên cho Tình Yêu trọn vẹn của Thiên Chúa đối với con người.",
+    reflectQuestion: "Bạn thấy tình yêu và sự vĩ đại của Thiên Chúa hiện diện thế nào trong vũ trụ xung quanh mình?",
+    prayContent: "Lạy Chúa, xin cho con biết tạ ơn Chúa vì vẻ đẹp thiên nhiên mà Ngài đã ban tặng cho chúng con. Lạy Chúa, xin dạy con sống chan hoà với muôn vật.",
+    actContent: "Hôm nay, hãy cắm một bông hoa trong phòng hoặc đi dạo 15 phút không dùng điện thoại để chiêm ngắm thiên nhiên.",
     category: "Cựu Ước",
-    duration: 15,
+    duration: 10,
     isUnlocked: true,
   },
   {
     id: "l1_sangthe_2",
     title: "Chương 2: Sa Ngã & Lời Hứa",
     description: "Nguyên tội của loài người và khát vọng cứu độ của Đức Chúa dành cho nhân loại xuất phát từ Vườn Địa Đàng.",
+    readContent: "Adam và Eva đã ăn trái cấm do sự cám dỗ của con rắn. Tội lỗi bước vào thế gian, nhưng Thiên Chúa không bỏ mặc con người mà hứa ban Đấng Cứu Độ để giải thoát chúng ta khỏi sự chết.",
+    reflectQuestion: "Có khi nào bạn cảm thấy mình đang trốn tránh Chúa sau khi phạm lỗi không?",
+    prayContent: "Lạy Chúa, xin thương xót sự yếu đuối của con và ban cho con can đảm để quay về với Ngài. Xin tấy sạch linh hồn con.",
+    actContent: "Hãy dọn mình và đi Xưng Tội trong tuần này nếu bạn thấy cần thiết.",
     category: "Cựu Ước",
-    duration: 20,
+    duration: 15,
     isUnlocked: true,
   },
   {
     id: "l2_tanuoc_1",
     title: "Bài 1: Truyền Tin & Giáng Sinh",
     description: "Sự vâng phục của Đức Maria và mầu nhiệm Ngôi Lời Nhập Thể làm người.",
+    readContent: "Thiên Thần Gabriel hiện ra cùng sứ điệp truyền tin. Đức Maria nói tiếng \"Xin Vâng\" (Fiat). Ngôi Lời đã trở nên người phàm và cư ngụ giữa chúng ta, rạng ngời ánh sáng chân lý.",
+    reflectQuestion: "Nếu Chúa gọi bạn làm một điều vượt ngoài khả năng, bạn có sẵn sàng thưa \"Xin Vâng\" như Đức Mẹ không?",
+    prayContent: "Lạy Chúa, xin cho con biết lắng nghe và làm theo Thánh Ý Chúa trong mọi nẻo đường đời.",
+    actContent: "Đọc 3 kinh Kính Mừng để cầu nguyện cho một người đang gặp khó khăn trong gia đình.",
     category: "Tân Ước",
-    duration: 25,
+    duration: 20,
     isUnlocked: false,
   },
   {
     id: "l3_phungvu_1",
     title: "Thánh Lễ: Đỉnh cao đời sống Phụng Vụ",
     description: "Hiểu sâu hơn về các phần trong Thánh Lễ, tầm quan trọng của Tiệc Thánh Thể.",
+    readContent: "Thánh lễ là nguồn mạch và chóp đỉnh của đời sống Kitô hữu. Trong đó, hy lễ Thập giá được hiện tại hóa qua Bí Tích Thánh Thể thiêng liêng. Chúa Giêsu, vì yêu thương ta đã tự hiến làm Bánh Hằng Sống...",
+    reflectQuestion: "Bạn thường tham dự Thánh Lễ với tâm thế nào? Có phải là một cuộc gặp gỡ hay chỉ là thói quen?",
+    prayContent: "Lạy Chúa Giêsu Thánh Thể, xin cho con luôn khát khao được rước Chúa vào lòng.",
+    actContent: "Chuẩn bị tâm hồn thật tốt và đi lễ sớm 5 phút vào Chủ Nhật tuần này.",
     category: "Phụng Vụ",
-    duration: 30,
+    duration: 25,
     isUnlocked: false,
   }
+];
+
+export const MOCK_GLOSSARIES: Glossary[] = [
+  { id: "g1", term: "Ánh sáng", definition: "Không chỉ là ánh sáng vật lý, mà biểu thị cho sự sống, chân lý và chính Thiên Chúa trong sách Sáng Thế.", relatedLessonId: "l1_sangthe_1" },
+  { id: "g2", term: "Nguyên tội", definition: "Tình trạng thiếu vắng ân sủng thánh hóa ban đầu, do tổ tông loài người truyền lại.", relatedLessonId: "l1_sangthe_2" },
+  { id: "g3", term: "Xin Vâng", definition: "Tiếng 'Fiat' của Đức Maria, thể hiện sự vâng phục tuyệt đối vào thánh ý Thiên Chúa.", relatedLessonId: "l2_tanuoc_1" },
+  { id: "g4", term: "Thánh Thể", definition: "Bí tích Mình và Máu Chúa Kitô ngự thật dưới hình bánh và rượu.", relatedLessonId: "l3_phungvu_1" }
 ];
 
 export const MOCK_QUIZZES: QuizQuestion[] = [
